@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open WebUI productization — private AI hosting for regulated teams</title>
+<meta name="description" content="How to productize Open WebUI (BSD-3 + branding clause): host it branding-intact as private AI for teams that can't use public LLMs, with a RAG wedge. The model, the groove, and the 50-user branding catch.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Open WebUI</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Tenant</p>
+    <h1>Open WebUI productization — private AI hosting for regulated teams</h1>
+    <p class="dek">Open WebUI is a self-hosted, ChatGPT-style interface over local and OpenAI-compatible models. Productize it as <b>branding-intact private AI</b> for organisations that can't send data to a public LLM — because the license says you must keep the branding.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic constrained">BSD-3 + branding</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v0.13.4</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">open-webui/open-webui</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M1 · host (branded)</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A feature-rich chat UI for self-hosted models.</h2>
+    <p>Open WebUI gives you a polished multi-user chat interface with RAG, tools/functions, model management and RBAC. The front end is Svelte/SvelteKit, the back end Python/FastAPI, and it connects to <b>Ollama</b> or any <b>OpenAI-compatible</b> endpoint. That model-connection point is where a local or in-country model backend plugs in — the reason regulated buyers care.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>You can host it — but you must keep its name on it.</h2>
+    <div class="callout warn">
+      <span class="tag">"Open WebUI License" = BSD-3-Clause + a branding clause (§4)</span>
+      <p>Clauses 1–3 are a standard BSD-3-Clause. Clause 4 is the catch: you may not alter, remove, obscure or replace the <b>"Open WebUI" branding</b> (name, logo, or any identifier) in any deployment or distribution — <b>except</b> when total end users stay at or under <b>50 in any rolling 30-day period</b>, when you have prior written permission, or in a few narrow cases spelled out in the license.</p>
+      <p>Translation: configuration and theming are fine, but <b>white-labelling at scale needs their enterprise license</b>. So this is a hosting-and-wedge business with the branding intact — not an own-brand "YourNameChat".</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>Private AI, hosted branded, with a data wedge.</h2>
+    <p>Run it as a managed service (M1) for buyers who need AI but can't use public cloud LLMs — clinics, law firms, government, finance. The differentiators:</p>
+    <ul>
+      <li><b>In-country / on-prem inference:</b> back it with a locally-hosted model (for example an openly available model such as SEA-LION) so the data never leaves the customer's jurisdiction.</li>
+      <li><b>A RAG wedge</b> over the customer's own document corpus — the thing that makes it <em>their</em> assistant, not a generic chat box.</li>
+      <li><b>Ops:</b> access-gating, tenant isolation, backups — the managed part of managed hosting.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> at a release (here, <code>v0.13.4</code>) — and re-read the <code>LICENSE</code> on every bump; its terms have changed before.</li>
+      <li><b>Deploy</b> on a self-hosted PaaS, <b>branding intact</b>, access-gated behind auth + TLS.</li>
+      <li><b>Connect</b> a local or OpenAI-compatible model backend and confirm a chat completes end-to-end.</li>
+      <li><b>Add the RAG wedge</b> over a sample corpus for one vertical, with the customer's data staying in their tenant.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>The branding clause is a business-model fork.</h2>
+    <div class="callout warn">
+      <span class="tag">Pick a compliant path, on purpose</span>
+      <p><b>Path A (default, free):</b> host it with "Open WebUI" branding visible. <b>Path B:</b> buy their enterprise license to white-label above the 50-user threshold. Decide which <em>before</em> you position it to customers — retrofitting a rebrand after you've sold "your" product is the expensive way to find out.</p>
+    </div>
+    <p>Second, quieter dependency: the whole service is only as available as your <b>model backend</b>. If inference runs on one box, its uptime and capacity gate the product — plan for a fallback.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/open-webui/open-webui">github.com/open-webui/open-webui</a> · <a href="https://github.com/open-webui/open-webui/blob/main/LICENSE">LICENSE (Open WebUI License)</a></p>
+    <div class="pager">
+      <a href="../stirling-pdf/">← Stirling-PDF</a>
+      <a href="../vibe-trading/">Vibe-Trading →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stirling-PDF productization — a compliance document-ops vertical</title>
+<meta name="description" content="How to productize Stirling-PDF (MIT core, open-core carve-out): a bulk redaction + OCR + packaging workflow for regulated back-office work. The model, the groove, and why redaction is a security gate.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Stirling-PDF</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Tenant</p>
+    <h1>Stirling-PDF productization — a compliance document-ops vertical</h1>
+    <p class="dek">Stirling-PDF is a self-hosted toolkit of PDF operations — merge, split, convert, OCR, redact, sign. Productize it as a <b>vertical workflow</b> for regulated back-office work, where the killer feature is redaction you can actually trust.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic permissive">MIT</span> <span style="color:var(--faint)">+ open-core</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v3.5.0</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">Stirling-Tools/Stirling-PDF</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M2 · vertical</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A browser-based PDF operations engine.</h2>
+    <p>Stirling-PDF is a Spring Boot web app that exposes dozens of document operations through a UI and a REST API, plus a pipeline feature for chaining them. It leans on heavy external engines — LibreOffice for office conversions, OCRmyPDF/Tesseract for OCR, qpdf/Ghostscript for manipulation — bundled in its official Docker image. The API and pipeline are the surface a product drives headlessly for batch work.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>MIT at the core — but mind the carve-out.</h2>
+    <div class="callout">
+      <span class="tag">MIT base + per-directory proprietary dirs</span>
+      <p>The base license is <b>MIT</b> — rebrand, close your wedge, and run it as a service, all permitted. (Note MIT has <b>no patent grant</b>, unlike Apache-2.0.) But it's <b>open-core</b>: specific directories in the repo — proprietary, SaaS, engine and editor variants — are governed by <b>separate per-directory license files</b>, not MIT.</p>
+      <p>So the rule is simple: build the vertical on the <b>MIT community core</b>, and don't take a dependency on (or reimplement to undercut) the proprietary directories. Record that boundary in a one-paragraph license posture.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>One compliance workflow, not a toolbox.</h2>
+    <p>The bare toolkit is a pile of buttons. The product is a single, repeatable <b>vertical flow</b> with a compliance stake — the obvious one for banks, BPOs and legal back-offices:</p>
+    <ul>
+      <li><b>Bulk true-redaction + OCR + packaging:</b> ingest a batch of documents, remove PII, make them searchable, and emit an audit-logged, packaged output.</li>
+      <li><b>Who pays:</b> regulated back-office and outsourcing teams that process sensitive documents at volume and must prove they did it safely.</li>
+      <li><b>Why MIT makes it easy:</b> you can present it as your own branded product and keep the workflow layer closed.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> at a release (here, <code>v3.5.0</code>) and stay on the MIT core; note the engine dependencies are heavy, so size the host accordingly.</li>
+      <li><b>Deploy</b> on a self-hosted PaaS; access-gate it and process uploads <b>ephemerally</b> — sensitive documents shouldn't persist past the job.</li>
+      <li><b>Wrap the workflow</b> over the REST API / pipeline — batch intake → redact → OCR → packaged output — as your own layer.</li>
+      <li><b>Gate on redaction integrity</b> (below) before anything ships.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>Redaction is a security test, not a visual one.</h2>
+    <div class="callout warn">
+      <span class="tag">A black box is not a redaction</span>
+      <p>Real redaction must <b>remove the underlying content</b>, not draw a rectangle over it. If the implementation only overlays, the "redacted" text is still recoverable by copy, extract, or re-render — and that's a data breach you shipped. This must be proven with an <b>extract-text test on the output</b>: zero target strings recoverable, or the release is blocked.</p>
+    </div>
+    <p>Confirm the upstream's redaction mode before promising it; if it overlays, your wedge has to flatten or re-render to genuinely destroy the content. Treat this as the one gate that can stop the whole product.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/Stirling-Tools/Stirling-PDF">github.com/Stirling-Tools/Stirling-PDF</a> · <a href="https://github.com/Stirling-Tools/Stirling-PDF/blob/main/LICENSE">LICENSE (MIT + carve-out)</a></p>
+    <div class="pager">
+      <a href="../immich/">← Immich</a>
+      <a href="../open-webui/">Open WebUI →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

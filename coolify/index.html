@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coolify productization — self-hosted PaaS as a deploy foundation</title>
+<meta name="description" content="How to productize Coolify (Apache-2.0): not by reselling hosting, but by making the self-hosted PaaS your reproducible, access-gated control plane. The wedge, the model, and the one security catch.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Coolify</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Foundation</p>
+    <h1>Coolify productization — a self-hosted PaaS as your deploy foundation</h1>
+    <p class="dek">Coolify is an open-source Heroku / Vercel alternative you run on your own servers. The most useful way to productize it isn't to resell hosting — it's to make it the reproducible, access-gated <b>control plane</b> that everything else deploys onto.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic permissive">Apache-2.0</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v4.7.6</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">coollabsio/coolify</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M3 · foundation</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A PaaS you own, that deploys other software for you.</h2>
+    <p>Coolify installs on a Linux host and then manages your <em>target</em> servers over SSH + Docker. It builds and deploys apps (Git push, Dockerfile, <code>docker-compose</code>, Nixpacks), provisions databases, ships one-click <b>service templates</b> for hundreds of popular tools, handles automatic TLS, scheduled backups, webhooks, and secret/env management. The upstream is primarily a Laravel/PHP + Livewire application.</p>
+    <p>That feature set is why it's the natural base of a productization program: the other tools in these guides become <b>Coolify services</b>, not bespoke infrastructure. Codify the deploy groove once, reuse it for every tenant.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>The freest position in the set.</h2>
+    <div class="callout ok">
+      <span class="tag">Apache-2.0 — permissive, with a patent grant</span>
+      <p>You may fork it, rebrand it, build a <b>closed-source</b> wedge on top, and run it as a commercial service. There is no copyleft and no branding clause, and Apache-2.0 adds an explicit patent grant on top of MIT-style freedom. For productization this is the easy case — nothing in the license blocks a business model.</p>
+    </div>
+    <p>The only real limit is <b>positioning, not law</b>: a "managed Coolify hosting" product competes directly with the vendor's own Coolify Cloud. That's a commercial choice to make deliberately — it isn't a licensing constraint.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>Make it the foundation, not the product.</h2>
+    <p>Two framings, in order of leverage:</p>
+    <ul>
+      <li><b>M3 · foundation (recommended).</b> Coolify is the control plane other open-source tenants deploy onto. The wedge is three parts: <b>provisioning-as-code</b> (a one-command, reviewed stand-up — never a blind <code>curl | bash</code>), <b>managed ops</b> (backups with a tested restore, monitoring, access-gating), and a <b>branded entry surface</b> (Apache-2.0 permits it freely). Codify a "deploy-a-tenant" runbook once and reuse it.</li>
+      <li><b>M1 · managed host.</b> Offer Coolify itself as a hosted product with an SLA and support. Legal under Apache-2.0 — just weigh the positioning note above.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> the upstream at a release (here, <code>v4.7.6</code>) and treat it as a tracked dependency, not a float.</li>
+      <li><b>Stand up</b> on a Linux host from the official installer — downloaded and <b>reviewed</b> before it runs, not piped straight into a shell.</li>
+      <li><b>Harden access</b>: firewall to 22/80/443, put the UI behind a gated domain — never leave the raw admin port open.</li>
+      <li><b>Deploy a tenant</b> via a native service template, then wire <b>scheduled backups + a restore you've actually tested</b> before calling it done.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>It holds the keys to everything.</h2>
+    <div class="callout warn">
+      <span class="tag">Control plane = blast radius</span>
+      <p>Coolify stores the <b>SSH keys</b> to every server it manages and the <b>secrets/env</b> of every app it runs, and it can deploy or destroy across all of them. That makes it the highest-value target you'll operate — compromise the control plane and you've compromised the whole fleet.</p>
+      <p>Non-negotiables: access-gate the UI, use least-privilege SSH, encrypt backups, and keep real tenant workloads on <b>worker</b> servers Coolify manages — not on the control-plane box itself.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/coollabsio/coolify">github.com/coollabsio/coolify</a> · <a href="https://github.com/coollabsio/coolify/blob/main/LICENSE">LICENSE (Apache-2.0)</a> · <a href="https://coolify.io/docs/start-with-self-hosted">install docs</a></p>
+    <div class="pager">
+      <span class="none">← Foundation</span>
+      <a href="../immich/">Immich →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

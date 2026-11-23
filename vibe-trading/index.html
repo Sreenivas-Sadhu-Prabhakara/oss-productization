@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vibe-Trading productization — a market research copilot</title>
+<meta name="description" content="How to productize Vibe-Trading (MIT): a vertical market-research copilot for one exchange. MIT is free — the real constraints are financial regulation (research not advice) and market-data licensing.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Vibe-Trading</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Frontier</p>
+    <h1>Vibe-Trading productization — a market research copilot</h1>
+    <p class="dek">Vibe-Trading is a multi-agent AI <b>research workspace</b> for markets: plain-English questions become strategies, analysis and backtests. Productize it as a vertical copilot for one exchange — and let its "research, not a bot" framing keep you the right side of the regulator.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic permissive">MIT</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v0.1.19</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">HKUDS/Vibe-Trading</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M2 · vertical</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A research workspace, explicitly not an auto-trader.</h2>
+    <p>Built by HKU's Data Intelligence Lab, Vibe-Trading turns natural-language prompts into market strategies, analysis and backtests. It's Python + FastAPI with a React front end, and it exposes a set of <b>MCP tools</b> any MCP client can call; only the multi-agent "swarm" feature needs an LLM key. Crucially, the project frames itself as a <b>research assistant, not an autonomous trading bot</b> — which turns out to be its most valuable property.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>MIT — and that's not where the risk is.</h2>
+    <div class="callout ok">
+      <span class="tag">MIT — full freedom</span>
+      <p>You can fork, rebrand, close your wedge and run it as a SaaS. There is no license constraint worth planning around here. The things that actually gate this product aren't in the code at all — they're regulatory and data-licensing, below.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>One market, one research flow.</h2>
+    <p>Take the generic engine and make it a vertical copilot for a specific exchange — say India's NSE/BSE:</p>
+    <ul>
+      <li><b>A market-data adapter</b> that swaps in that exchange's instruments and prices (the main build).</li>
+      <li><b>One plain-English flow</b> — "explain this move, analyse this name, backtest this idea" — polished for a non-quant user.</li>
+      <li><b>Optionally a local model backend</b> to control LLM cost and keep queries private.</li>
+      <li><b>Framing:</b> keep it a <em>research/education</em> workspace end to end — it's the honest description and the compliant one.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> at a release (here, <code>v0.1.19</code>) — it's a young, fast-moving project, so treat interfaces as liable to churn.</li>
+      <li><b>Deploy</b> the app on a self-hosted PaaS; access-gate it.</li>
+      <li><b>Build the data adapter</b> for your exchange, starting with <b>end-of-day / delayed</b> data (cheaper and freer to redistribute).</li>
+      <li><b>Wrap one research flow</b> with clear disclaimers and <b>no execution surface</b> — no order routing, no buy/sell calls.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>The regulator and the data vendor, not the license.</h2>
+    <div class="callout warn">
+      <span class="tag">Research, not advice</span>
+      <p>In most markets, giving personalised investment <b>advice</b> or recommendations requires registration — for example India's SEBI research-analyst / investment-adviser regime. Stay strictly <b>research and education</b>: no personalised buy/sell/target calls, no execution. The upstream's own "research workspace, not a bot" stance is an asset here — keep it.</p>
+    </div>
+    <div class="callout warn">
+      <span class="tag">Market data is licensed</span>
+      <p>Real-time exchange feeds are <b>paid and redistribution-restricted</b>; end-of-day and delayed data are cheaper and more permissive. Build the MVP on EOD/delayed, and treat a live feed as a deliberate cost-and-license decision, not a default.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/HKUDS/Vibe-Trading">github.com/HKUDS/Vibe-Trading</a> · <a href="https://github.com/HKUDS/Vibe-Trading/blob/main/LICENSE">LICENSE (MIT)</a></p>
+    <div class="pager">
+      <a href="../open-webui/">← Open WebUI</a>
+      <a href="../gods-eye-view/">God's Eye View →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

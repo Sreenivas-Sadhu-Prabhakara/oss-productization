@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paperclip productization — an AI agent operations layer</title>
+<meta name="description" content="How to productize Paperclip (MIT): an internal-first operations layer over your own AI agent fleet. MIT is free; the catch is an unproven category and a credential/budget surface — dogfood before selling.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Paperclip</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Frontier</p>
+    <h1>Paperclip productization — an AI agent operations layer</h1>
+    <p class="dek">Paperclip is a self-hosted app for coordinating teams of AI agents toward business goals — budgets, org charts, work items. It's brand-new and bring-your-own-agent. Productize it <b>internal-first</b>: an operations layer over your own agent fleet, before anyone tries to sell it.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic permissive">MIT</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v2026.1117.0</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">paperclipai/paperclip</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M3 · internal→SaaS</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A coordination layer for agents you supply.</h2>
+    <p>Paperclip lets you organise AI agents around goals, work items and budgets, with an org-chart mental model. It's <b>bring-your-own-agent</b> — it orchestrates agents you connect rather than shipping its own. The stack is a Node server + React UI + embedded PostgreSQL, with a quickstart CLI. It's very new, with a fast calendar-versioned release cadence, so expect its interfaces to move.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>MIT — the easy part.</h2>
+    <div class="callout ok">
+      <span class="tag">MIT — full freedom</span>
+      <p>Fork, rebrand, close your wedge, run it as a service — all permitted. As with the other MIT projects here, the license is not the thing to plan around. The real questions are whether the category is ready and how you hold the credentials it needs.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>Dogfood it before you sell it.</h2>
+    <p>The honest path for a brand-new category is internal-first (M3 → SaaS only if it earns it):</p>
+    <ul>
+      <li><b>Run it over your own agent fleet</b> as an operations layer — what the agents are doing, what they're spending, what's stuck.</li>
+      <li><b>The wedge is governance + analytics:</b> a usage, cost and audit layer over the orchestration — the part a team actually needs once more than one agent is doing real work.</li>
+      <li><b>Only then externalise:</b> a paid product offered to others once you've proven it on yourself. No "zero-human company" claims — just useful agent ops.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> at a release (here, <code>v2026.1117.0</code>) and keep your integration a <b>thin adapter</b> — expect rework as it churns.</li>
+      <li><b>Deploy</b> the Node app + Postgres on a self-hosted PaaS; access-gate it.</li>
+      <li><b>Wire one real agent</b> and confirm it appears and can take work.</li>
+      <li><b>Track activity + budget/spend</b>, and cap it — this is the governance wedge and the safety rail at once.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>Unproven category, concentrated credentials.</h2>
+    <div class="callout warn">
+      <span class="tag">Build on ground that may shift</span>
+      <p>"Manage agents at work" is an emerging, unproven category — compelling as a demo, unsettled as a market. Don't build a business on it before you've proven value internally. Keep positioning honest; the hype framing is marketing, not reality.</p>
+    </div>
+    <p>And treat it as a <b>security and cost-governance surface</b>: it holds agent credentials and budget authority. Least-privilege access, encrypted secrets, and hard budget caps aren't optional when one misconfigured agent can spend real money.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/paperclipai/paperclip">github.com/paperclipai/paperclip</a> · <a href="https://github.com/paperclipai/paperclip/blob/main/LICENSE">LICENSE (MIT)</a></p>
+    <div class="pager">
+      <a href="../gods-eye-view/">← God's Eye View</a>
+      <span class="none">End of guides</span>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

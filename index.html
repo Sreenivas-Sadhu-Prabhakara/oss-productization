@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-source productization — license-first guides</title>
+<meta name="description" content="How to turn seven widely-used open-source projects into products, starting from what each project's license actually permits. The pin-and-wedge method, and a guide for each.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap masthead">
+    <p class="eyebrow">OSS Productization · license-first guides</p>
+    <h1>Open-source productization, done license-first.</h1>
+    <p class="dek">Seven widely-used open-source repositories, each with a practical guide to turning it into a product — not by forking and rewriting it, but by <b>pinning</b> the upstream and shipping a <b>wedge</b>. The license decides the business model. Start with the method, then open any guide.</p>
+    <div class="meta">
+      <span class="chip"><b>7</b> guides</span>
+      <span class="chip">method: <b>pin-and-wedge</b></span>
+      <span class="chip">licenses &amp; versions <b>verified 2026-11-23</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <p class="kicker">The method</p>
+    <h2>Productizing OSS is a brownfield problem you don't own.</h2>
+    <p class="lede">The system already exists — but it's someone else's code. So you never strangler-rewrite it. You pin a release, read its <b>license</b> as a load-bearing constraint, and build a separate value layer alongside it. The plan is mostly <b>KEEP</b> (upstream, untouched) + <b>ADD</b> (your wedge).</p>
+
+    <div class="models">
+      <div class="model"><span class="tag">M1 · Managed host</span><p>Run upstream ≈unmodified as a service — deploy, backups, SLA, support. Gated by copyleft &amp; branding terms.</p></div>
+      <div class="model"><span class="tag">M2 · Vertical SaaS</span><p>Upstream engine + a domain skin and one killer workflow. Needs a permissive license to own-brand.</p></div>
+      <div class="model"><span class="tag">M3 · Wedge-on-top</span><p>A separate layer (provisioning, ops, data) that calls upstream but isn't a derivative. Any license.</p></div>
+    </div>
+
+    <ol class="steps">
+      <li><b>Capture</b> the upstream: pin a release, read the <code>LICENSE</code>, map the API you'll build against.</li>
+      <li><b>Plan the diff</b>: KEEP upstream + ADD the wedge; a license breach is rejected before you build.</li>
+      <li><b>Build the wedge only</b> — the upstream stays a pinned dependency, never a fork.</li>
+      <li><b>Ship to an MVP bar</b>: runs, access-gated, license-clean, reproducible, honestly described.</li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="kicker">The seven · at a glance</p>
+    <h2>License first — it decides what's legal.</h2>
+    <p class="lede">The column that matters most is the second one. Three of these carry a real license catch most people miss; two more carry a <i>regulatory</i> one that isn't in the code at all. Open a guide for the full picture.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Project</th><th>License</th><th>Model</th><th>The catch</th><th>Pinned</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="nm"><a href="coolify/">coolify</a><div class="tier">foundation</div></td>
+            <td><span class="lic permissive">Apache-2.0</span></td>
+            <td>M3 · foundation</td>
+            <td class="gotcha">Clean. It's the control plane the other six can deploy onto.</td>
+            <td class="gotcha"><span class="mono">v4.7.6</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="immich/">immich</a><div class="tier">tenant</div></td>
+            <td><span class="lic constrained">AGPL-3.0</span></td>
+            <td>M1 · managed host</td>
+            <td class="gotcha">Network copyleft — any <i>modification</i> you deploy must be published. Keep the wedge API-only.</td>
+            <td class="gotcha"><span class="mono">v3.4.2</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="stirling-pdf/">stirling-pdf</a><div class="tier">tenant</div></td>
+            <td><span class="lic permissive">MIT</span></td>
+            <td>M2 · vertical</td>
+            <td class="gotcha">MIT core, but an open-core carve-out — build on the community dirs. And prove redaction truly <i>removes</i> content.</td>
+            <td class="gotcha"><span class="mono">v3.5.0</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="open-webui/">open-webui</a><div class="tier">tenant</div></td>
+            <td><span class="lic constrained">BSD-3 + branding</span></td>
+            <td>M1 · host (branded)</td>
+            <td class="gotcha">Can't white-label above 50 users / 30 days without their enterprise license. Host it branded.</td>
+            <td class="gotcha"><span class="mono">v0.13.4</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="vibe-trading/">vibe-trading</a><div class="tier">frontier</div></td>
+            <td><span class="lic permissive">MIT</span></td>
+            <td>M2 · vertical</td>
+            <td class="gotcha">License-free, but market regulators bind it: research/education only — never advice or auto-execution.</td>
+            <td class="gotcha"><span class="mono">v0.1.19</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="gods-eye-view/">gods-eye-view</a><div class="tier">frontier</div></td>
+            <td><span class="lic permissive">MIT</span></td>
+            <td>M2 · vertical</td>
+            <td class="gotcha">MIT covers the <i>code only</i>; each live data feed's ToS — and the surveillance optics — are the real limits.</td>
+            <td class="gotcha"><span class="mono">v0.3.0</span></td>
+          </tr>
+          <tr>
+            <td class="nm"><a href="paperclip/">paperclip</a><div class="tier">frontier</div></td>
+            <td><span class="lic permissive">MIT</span></td>
+            <td>M3 · internal→SaaS</td>
+            <td class="gotcha">License-free, but the category is unproven. Dogfood internally before selling it.</td>
+            <td class="gotcha"><span class="mono">v2026.1117.0</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">The guides</p>
+    <h2>Each repo → a product thesis.</h2>
+    <p class="lede">What it is, what you'd add, who pays, and the one thing that will trip you up. Pick one.</p>
+    <div class="cards">
+
+      <div class="card foundation">
+        <div class="row1"><h3><a href="coolify/">coolify</a></h3><span class="tier">Foundation</span></div>
+        <div class="model-line">M3 · the control plane</div>
+        <p>A self-hosted PaaS. Productize it not as a sold product but as the <b>foundation</b>: a reproducible, backed-up, access-gated control plane that one-click-deploys other open-source apps. Permissive license, so the wedge is unconstrained.</p>
+        <a class="go" href="coolify/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="immich/">immich</a></h3><span class="tier">Tenant</span></div>
+        <div class="model-line">M1 · managed private photo cloud</div>
+        <p>Self-hosted Google Photos. The wedge is a <b>client-gallery delivery</b> app — a separate, non-derivative service that calls Immich's API, so AGPL is satisfied and your app is yours to brand.</p>
+        <a class="go" href="immich/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="stirling-pdf/">stirling-pdf</a></h3><span class="tier">Tenant</span></div>
+        <div class="model-line">M2 · compliance document-ops</div>
+        <p>A self-hosted PDF toolkit, pointed at regulated back-office work: bulk <b>true-redaction + OCR + packaging</b>. The gating test isn't visual — it's that the redacted content is genuinely unrecoverable.</p>
+        <a class="go" href="stirling-pdf/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="open-webui/">open-webui</a></h3><span class="tier">Tenant</span></div>
+        <div class="model-line">M1 · private AI for regulated teams</div>
+        <p>A ChatGPT-style UI over local models. Host it <b>branding intact</b> (the license requires it) for clinics / law / government who can't use public LLMs — with a RAG wedge over their own documents.</p>
+        <a class="go" href="open-webui/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="vibe-trading/">vibe-trading</a></h3><span class="tier">Frontier</span></div>
+        <div class="model-line">M2 · market research copilot</div>
+        <p>An AI multi-agent <b>research</b> workspace (its authors are careful: not a bot). The wedge is a market-data adapter + one plain-English "explain, analyse, backtest" flow — framed research-only to stay the right side of the regulator.</p>
+        <a class="go" href="vibe-trading/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="gods-eye-view/">gods-eye-view</a></h3><span class="tier">Frontier</span></div>
+        <div class="model-line">M2 · geospatial intelligence</div>
+        <p>A browser 3D globe of live public spatial data, with keys brokered server-side. Productize it as a dashboard for one benign, paying vertical — disaster response, say — using only ToS-clean feeds and no person-level data.</p>
+        <a class="go" href="gods-eye-view/">Read the guide →</a>
+      </div>
+
+      <div class="card">
+        <div class="row1"><h3><a href="paperclip/">paperclip</a></h3><span class="tier">Frontier</span></div>
+        <div class="model-line">M3 · agent operations</div>
+        <p>A brand-new app to coordinate teams of AI agents at work. Productize it <b>internal-first</b>: an operations layer over your own agent fleet, dogfooded until it earns an external pilot. Honest about an unproven category.</p>
+        <a class="go" href="paperclip/">Read the guide →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="callout">
+      <span class="tag">How to read this</span>
+      <p>These are <b>productization guides</b>, not product announcements. Each project's <b>license and pinned version were verified against its repository on 2026-11-23</b> (read from each <code>LICENSE</code> file and the GitHub release list), and the deploy claims about a self-hosted PaaS are drawn from its public template catalogue. Everything downstream of that — exact stacks, API surfaces, running instances — is a plan, not a demonstration. Nothing here is a live product, and none of these projects endorses this.</p>
+      <p>The value is the <b>license-first teardown</b>: for seven real, high-adoption projects, here's what you're actually allowed to build on top, and the smallest wedge that turns "the OSS, running" into something you could sell.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>A license-first study of open-source productization · method: <span class="mono">pin-and-wedge</span> · seven guides.</p>
+  <p class="mono">Licenses + versions verified 2026-11-23 · static site, no external dependencies, no tracking.</p>
+</footer>
+</body>
+</html>

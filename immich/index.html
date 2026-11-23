@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immich productization — self-hosted photos as a managed product</title>
+<meta name="description" content="How to productize Immich (AGPL-3.0): host it unmodified and sell a client-gallery wedge that calls its API, so the network-copyleft clause stays satisfied. The model, the groove, and the AGPL trap.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>Immich</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Tenant</p>
+    <h1>Immich productization — self-hosted photos as a managed product</h1>
+    <p class="dek">Immich is a self-hosted Google Photos: backup, mobile apps, and ML search over your own library. Its license is the whole game — productize it by hosting it <b>unmodified</b> and selling a separate app that talks to its API.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic constrained">AGPL-3.0</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v3.4.2</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">immich-app/immich</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M1 · managed host</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A private photo cloud with real ML.</h2>
+    <p>Immich backs up photos and video from mobile and web, then runs CLIP-style semantic search and face recognition over them. The stack is a NestJS/TypeScript server, a SvelteKit web app, Flutter mobile apps, PostgreSQL with a vector extension for embeddings, Redis, and a Python ML service. It deploys from an official <code>docker-compose</code>, and self-hosted PaaS platforms ship a one-click template for it.</p>
+    <p>It is also the highest-sensitivity data in this set: entire personal photo libraries, EXIF geolocation, and biometric face data. Privacy isn't a feature here — it's the product promise.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>AGPL means the network counts as distribution.</h2>
+    <div class="callout warn">
+      <span class="tag">AGPL-3.0 — strong copyleft + the §13 network clause</span>
+      <p>Hosting Immich <b>unmodified</b> as a service is completely fine. But if you <b>modify</b> it and let users reach it over a network, AGPL's §13 obliges you to offer those users the modified source. Patch Immich to build your feature and you've just agreed to publish your feature.</p>
+      <p>The way through: don't patch it. Keep your product a <b>separate, non-derivative application</b> that talks to Immich over its public API. Your app stays yours; Immich stays unmodified; the clause is satisfied.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>Immich is the engine; the wedge is the product.</h2>
+    <p>Run Immich as a managed private photo cloud (M1), and add one workflow that the bare project doesn't have. The sharp example is <b>client-gallery delivery</b> for photographers: a separate service that calls Immich's API to publish branded, expiring, access-controlled galleries to clients.</p>
+    <ul>
+      <li><b>Who pays:</b> photographers and studios who want a private library <em>and</em> a polished client-delivery experience, without a public cloud.</li>
+      <li><b>Why it's defensible under AGPL:</b> the gallery app is API-only and non-derivative, so you can brand and even close it — Immich underneath stays untouched and upgradeable.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> Immich at a release (here, <code>v3.4.2</code>) — it moves fast and has a pre-1.0 history of breaking changes, so re-test on every bump.</li>
+      <li><b>Deploy</b> it unmodified (compose or a native PaaS template); access-gate it behind auth and TLS.</li>
+      <li><b>Build the wedge</b> as a separate service against Immich's API — albums, assets, shared links — never a patch to Immich itself.</li>
+      <li><b>Back up</b> Postgres and the originals volume, and <b>run a restore</b> into a scratch target to prove assets return.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>Two: the AGPL trap, and the storage economics.</h2>
+    <div class="callout warn">
+      <span class="tag">Don't patch upstream</span>
+      <p>The single most expensive mistake is a "quick fix" inside the Immich source. That turns your whole deployment into a modified network service and triggers the source-offer obligation. Architect the wedge as API-only from day one.</p>
+    </div>
+    <p>And the quieter one: a managed photo service lives or dies on <b>storage cost</b>. Originals are large, backups double them, and biometric/geolocation data raises real privacy-regulation duties. Price the storage and write a retention policy before you take a paying customer.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/immich-app/immich">github.com/immich-app/immich</a> · <a href="https://github.com/immich-app/immich/blob/main/LICENSE">LICENSE (AGPL-3.0)</a></p>
+    <div class="pager">
+      <a href="../coolify/">← Coolify</a>
+      <a href="../stirling-pdf/">Stirling-PDF →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>God's Eye View productization — a geospatial intelligence dashboard</title>
+<meta name="description" content="How to productize God's Eye View (MIT code only): a focused geospatial dashboard for one benign vertical. The code is MIT; the real limits are each data feed's ToS and the surveillance optics.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e63'/%3E%3Cpath d='M9 22V10h5a4 4 0 0 1 0 8H9' fill='none' stroke='%23faf8f4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../">OSS Productization</a>
+    <nav class="crumbs"><a href="../">Guides</a> <span>/</span> <b>God's Eye View</b></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Guide · Frontier</p>
+    <h1>God's Eye View productization — a geospatial intelligence dashboard</h1>
+    <p class="dek">God's Eye View is a browser 3D globe that plots live public spatial data — aircraft, ships, satellites, quakes, traffic — with keys brokered server-side. Productize it as a focused dashboard for <b>one benign, paying vertical</b>, using only feeds you're allowed to use commercially.</p>
+    <ul class="facts">
+      <li class="fact"><span class="k">License</span><span class="v"><span class="lic permissive">MIT</span> <span style="color:var(--faint)">code only</span></span></li>
+      <li class="fact"><span class="k">Pinned</span><span class="v mono">v0.3.0</span></li>
+      <li class="fact"><span class="k">Upstream</span><span class="v mono">bilawalsidhu/gods-eye-view</span></li>
+      <li class="fact"><span class="k">Model</span><span class="v">M2 · vertical</span></li>
+    </ul>
+  </div>
+
+  <section class="prose">
+    <p class="kicker">What it is</p>
+    <h2>A photorealistic globe of live public data.</h2>
+    <p>It renders a 3D globe in the browser and overlays live public spatial feeds — flights, vessels, satellites, earthquakes, traffic, even public cameras — with satellite imagery draped on terrain and a voice/NL query layer. A key design choice: a <b>server-side key broker</b> holds all the API keys and proxies feed and imagery calls, so no secrets sit in the client. That broker is both the architecture's strength and your cost centre.</p>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The license reality</p>
+    <h2>The code is MIT. The data is not.</h2>
+    <div class="callout">
+      <span class="tag">MIT — but it covers the source only</span>
+      <p>The repository is MIT — fork, rebrand, close your wedge, run it as a service. But the license file <b>explicitly appends a note</b> that it covers the <b>source code only</b>, not the third-party data and imagery the app displays. So the code is free to build on; the <em>feeds</em> come with their own terms, and those are the real constraint (next section).</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">How you'd productize it</p>
+    <h2>Pick one benign vertical and go deep.</h2>
+    <p>The open project is a dazzling demo of everything. A product is a focused dashboard for one buyer with a budget. A strong, defensible default is <b>disaster response / situational awareness</b>:</p>
+    <ul>
+      <li><b>Swap the feed set</b> to ToS-clean sources relevant to the vertical (weather, seismic, maritime, aviation) and drop the rest.</li>
+      <li><b>Add a vertical dashboard</b> — alerting, areas of interest, briefing views — on top of the globe.</li>
+      <li><b>Who pays:</b> agencies, NGOs and operators who need a live common operating picture and can't stand up a geospatial stack themselves.</li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The groove</p>
+    <h2>Pin-and-wedge, concretely.</h2>
+    <ol class="steps">
+      <li><b>Pin</b> at a release (here, <code>v0.3.0</code>); it's new and the hosted version is in flux.</li>
+      <li><b>Self-host</b> with the key broker intact — verify no keys reach the client bundle.</li>
+      <li><b>Wire only ToS-clean feeds</b> for your vertical, and cache/rate-limit to keep per-call costs sane.</li>
+      <li><b>Build the vertical dashboard</b> as your wedge, and write a per-feed data posture before you charge.</li>
+    </ol>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">The catch</p>
+    <h2>Feed terms, and the surveillance optics.</h2>
+    <div class="callout warn">
+      <span class="tag">Every feed has its own ToS</span>
+      <p>ADS-B flights, AIS vessels, satellite elements, traffic, cameras, imagery (e.g. Sentinel-2 / Copernicus) — each carries its own license, redistribution and commercial-use terms. A feed that's free for a demo may forbid commercial redistribution entirely. A commercial product must use <b>only ToS-clean sources</b>, confirmed per feed.</p>
+    </div>
+    <div class="callout warn">
+      <span class="tag">Situational, not surveillance</span>
+      <p>The "spy satellite" framing and any <b>person-level</b> or public-camera data are a privacy and reputational liability in a commercial product. Disable person-level feeds and keep the product <b>situational</b> — tracking conditions and assets, not people.</p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <p class="kicker">Sources</p>
+    <p><a href="https://github.com/bilawalsidhu/gods-eye-view">github.com/bilawalsidhu/gods-eye-view</a> · <a href="https://github.com/bilawalsidhu/gods-eye-view/blob/main/LICENSE">LICENSE (MIT, code only)</a></p>
+    <div class="pager">
+      <a href="../vibe-trading/">← Vibe-Trading</a>
+      <a href="../paperclip/">Paperclip →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="mono">License + version verified 2026-11-23 · guidance, not a running product · <a href="../">all guides</a></p>
+</footer>
+</body>
+</html>
